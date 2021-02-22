@@ -1,0 +1,36 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "欢迎回来 亲爱的魁拔",
+    "version": "1.0.0",
+    "contact": {
+      "email": "wxfangguang@163.com"
+    }
+  },
+  "basePath": "/",
+  "parameters": {
+  },
+  "definitions": {
+  },
+  "paths": {
+    "/hello": {
+      "get": {
+        "summary": "liveness check path",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "hello": {
+                  "type": "string",
+                  "default": "ding"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+    // 对象类型，设置编译的选项
+    "compilerOptions": {
+        // 定义输出文件的文件夹
+        "outDir": "./built",
+        // 编译时，允许有 js 文件(默认false)
+        "allowJs": true,
+        // 引入库定义文件
+        "lib": ["es2015", "es2017"],
+        // 输出代码 ES 版本
+        "target": "es5"
+    },
+    // 数组类型，用于表示 ts 管理的文件（2.0 以上）
+    "include": [
+        "./types/*",
+        "./scripts/*",
+        "./app/**/*"
+    ]
+}

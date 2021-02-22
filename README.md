@@ -1,3 +1,3 @@
 # Cribug
-    Cribug  is the world's greatest demon man, past dynasties chief unplug brief introduction! Kuiba is neither a heavenly creature, nor an abnormal life form of a terrestrial creature. He has a special pulse frequency that never existed between heaven and earth.
+    魁拔十二妖，灵山军成员，追随第四代魁拔迷麟为建立无纹耀等级制度的自由平等的新秩序而征战世界各地。他们是战争失败后残存下的十二人。
 [KOA](http://127.0.0.1:3000/swagger)

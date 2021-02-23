@@ -3,7 +3,7 @@ const { nanoid } = require('nanoid');
 const _ = require('lodash');
 const Axios = require('axios');
 
-const logger = require('../middleware/logger.js');
+const logger = require('../connectors/logger.js');
 
 /** 自定义一个 axios 实例 */
 const axios = Axios.create({

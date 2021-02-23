@@ -9,6 +9,7 @@
     "nyc:cov": "NODE_ENV=ci nyc ava && nyc report --reporter=html",
     "nyc": "NODE_ENV=ci nyc ava",
     "test": "NODE_ENV=ci ava",
+    "lint": "eslint ./app/*.js ./config/*.js ./test/*.js",
     "test:cov": "NODE_ENV=ci nyc ava -v && npm run cov"
   },
   "dependencies": {

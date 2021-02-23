@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const config = require('../../config').mongoose;
-const logger = require('../middleware/logger');
+const logger = require('./logger');
 
 const createDb = (payload) => {
   const uri = payload.uri || `mongodb://${payload.hosts.join(',')}/${payload.database}`;

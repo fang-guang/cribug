@@ -18,6 +18,7 @@ COPY . ./
 # 从上面的依赖构建阶段，也就是 `npminstall` image
 # 把 `node_modules` 都复制过来，其他的就不用了
 COPY --from=npminstall /tmp/node_modules /src-app/node_modules
+EXPOSE 3000
 
 ENTRYPOINT ["node", "app.js"]
 

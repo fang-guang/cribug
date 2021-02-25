@@ -1,31 +1,39 @@
 language: node_js
 node_js:
-- 14.15.4
+    - 14.15.4
+# 需要的数据库
+services: 
+    - mongodb 
+    - redis
 install:
-- npm i
+    - npm i
+# 运行脚本
 script:
-- npm run lint
-- npm run test
+    - npm run lint
+    - npm run test
+
+# 设置邮件通知
 notifications:
   email:
     recipients:
-    - fangguang_emaill@163.com
+        - fangguang_emaill@163.com
     on_success: always
     on_failure: always
 after_success:
-- npm run nyc:cov
-- npm run cov
+    - npm run nyc:cov
+    - npm run cov
+    - ssh root@47.115.164.70 
 after_failure:
-- node -pe "require('./test/init.js').dropCollection()"
+    - node -pe "require('./test/init.js').dropCollection()"
 branches:
   only:
-  - master
-  - develop
-  - test
-before_install:
-  - openssl aes-256-cbc -K $encrypted_9b2d7e19d83c_key -iv $encrypted_9b2d7e19d83c_iv
-   -in id_rsa.enc -out ~\/.ssh/id_rsa -d
-  - chmod 600 ~/.ssh/id_rsa
+    - master
+    - develop
+    - test
 
 addons:
-        ssh_known_hosts: 47.115.164.70
+    ssh_known_hosts: 47.115.164.70
+before_install:
+  - openssl aes-256-cbc -K $encrypted_9b2d7e19d83c_key -iv $encrypted_9b2d7e19d83c_iv
+   -in id_rsa.enc -out ~/.ssh/id_rsa -d
+  - chmod 600 ~/.ssh/id_rsa

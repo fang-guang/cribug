@@ -38,13 +38,11 @@ job:
     after_success:
         - npm run nyc:cov
         - npm run cov
-
-script:
-    - echo "$DOCKERUSER will build images"
-    - docker login -u ${DOCKERUSER} --password ${DOCKERPASSWORD}
-    - echo ${IMAGENAME}
-    - docker build  -t ${IMAGENAME} .
-    - docker push ${IMAGENAME}
+        - echo "登陆docker"
+        - docker login -u ${DOCKERUSER} --password ${DOCKERPASSWORD}
+        - echo ${IMAGENAME}
+        - docker build  -t ${IMAGENAME} .
+        - docker push ${IMAGENAME}
 
 after_success:
     - ssh root@47.115.164.70  "cribug/deploy.sh"

@@ -1,5 +1,5 @@
 {
-  "name": "calendar",
+  "name": "cribug",
   "version": "1.0.0",
   "description": "abandonlist server",
   "main": "app.js",
@@ -59,8 +59,20 @@
   },
   "keywords": [
     "koa",
-    "mongo"
+    "mongo",
+    "ci/cd"
   ],
   "author": "fangguang",
-  "license": "ISC"
+  "license": "ISC",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fang-guang/cribug.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fang-guang/cribug/issues"
+  },
+  "homepage": "https://github.com/fang-guang/cribug#readme"
 }

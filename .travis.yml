@@ -2,19 +2,15 @@ language: node_js
 os: linux
 node_js:
     - 14.15.4
+stages:
+  - test
+  - build
+
 # 需要的数据库
 services: 
     - mongodb 
     - redis
     - docker
-# 服务器地址
-addons:
-    ssh_known_hosts: 47.115.164.70
-# 进入服务器密钥
-before_install:
-  - openssl aes-256-cbc -K $encrypted_9b2d7e19d83c_key -iv $encrypted_9b2d7e19d83c_iv
-   -in id_rsa.enc -out ~/.ssh/id_rsa -d
-  - chmod 600 ~/.ssh/id_rsa
 install:
     - npm i
 cache: npm
@@ -29,23 +25,35 @@ notifications:
 branches:
   only:
     - master
-    - develop
     - test
+    - develop        
 
-# 运行脚本
-script:
-    - npm run lint
-    - npm run test
-after_failure:
-    - node -pe "require('./test/init.js').dropCollection()"
-after_success:
-    - npm run nyc:cov
-    - npm run cov
-    - echo "登陆docker"
-    - docker login -u ${DOCKERUSER} --password ${DOCKERPASSWORD}
-    - echo ${IMAGENAME}
-    - docker build  -t ${IMAGENAME} .
-    - docker push ${IMAGENAME}
+job:
+    - stage: test
+        script:
+            - npm run test
+        after_failure:
+            - node -pe "require('./test/init.js').dropCollection()"
+        after_success:
+            - npm run nyc:cov
+            - npm run cov 
+    - stage: build
+        script:
+            - echo "$DOCKERUSER will build images"
+            - docker login -u ${DOCKERUSER} --password ${DOCKERPASSWORD}
+            - IMAGENAME=${DOCKERUSER}/deploy
+            - echo $IMAGENAME
+            - docker build  -t ${IMAGENAME} .
+            - docker push ${IMAGENAME}
 
+# 服务器地址
+addons:
+    ssh_known_hosts: 47.115.164.70
 after_success:
-    - ssh root@47.115.164.70  "cribug/deploy.sh"
+    - ssh root@47.115.164.70  "/cribug/deploy.sh"
+
+# 进入服务器密钥
+before_install:
+  - openssl aes-256-cbc -K $encrypted_9b2d7e19d83c_key -iv $encrypted_9b2d7e19d83c_iv
+   -in id_rsa.enc -out ~/.ssh/id_rsa -d
+  - chmod 600 ~/.ssh/id_rsa

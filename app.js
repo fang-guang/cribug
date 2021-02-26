@@ -1,5 +1,6 @@
 const Koa = require('koa');
 // 应用记录接口日志
+console.log(1111)
 const koaWinston = require('koa2-winston');
 // swagger自动生成api文档
 const koaBody = require('koa-body');

@@ -3,8 +3,9 @@ os: linux
 node_js:
     - 14.15.4
 stages:
-  - test
   - build
+  - test
+  - deploy
 
 # 需要的数据库
 services: 
@@ -29,14 +30,6 @@ branches:
     - develop        
 
 job:
-    - stage: test
-        script:
-            - npm run test
-        after_failure:
-            - node -pe "require('./test/init.js').dropCollection()"
-        after_success:
-            - npm run nyc:cov
-            - npm run cov 
     - stage: build
         script:
             - echo "$DOCKERUSER will build images"
@@ -45,6 +38,19 @@ job:
             - echo $IMAGENAME
             - docker build  -t ${IMAGENAME} .
             - docker push ${IMAGENAME}
+    - stage: test
+        script:
+            - echo "this is test stage"
+            - npm run lint
+            - npm run test
+        after_failure:
+            - node -pe "require('./test/init.js').dropCollection()"
+        after_success:
+            - npm run nyc:cov
+            - npm run cov 
+    - stage: deploy
+        script:
+            - echo "this is deploy stage"
 
 # 服务器地址
 addons:

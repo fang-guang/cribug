@@ -15,7 +15,7 @@ services:
 install:
     - npm i
 cache: npm
-# 设置邮件通知
+# 邮件
 notifications:
   email:
     recipients:

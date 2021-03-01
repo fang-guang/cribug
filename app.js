@@ -21,7 +21,7 @@ app.on('error', (err) => {
   logger.error(err);
   sentry.captureException(err);
 });
-// 这个中间键用于把err返回给sentry
+// sentry
 app.use(errorHanler(app));
 app.use(koaBody({
   multipart: true, // 支持文件上传

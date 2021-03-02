@@ -28,8 +28,8 @@ jobs:
         docker login -u ${{ secrets.DOCKERUSER }} -p ${{secrets.DOCKERPASSWORD}}
     - run:
         VERSION=$(date +%s) 
-        docker build ${{secrets.IMAGENAME}}:${VERSION} .
-        docker push ${{secrets.IMAGENAME}}:${VERSION}
+        docker build cribug:${VERSION} .
+        docker push cribug:${VERSION}
 
   deploy:
     runs-on: ubuntu-latest

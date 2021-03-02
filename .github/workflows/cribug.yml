@@ -10,14 +10,17 @@ jobs:
         matrix:
           node-version: [14.x]
       steps:
+        - uses: actions/checkout@master
+        - name: Publish to Docker Repository
         - name: Login Docker
-          run: 
-            docker login -u ${DOCKERUSER} --password ${DOCKERPASSWORD}
+          run: |
+            echo ${{DOCKERUSER}} ${{DOCKERPASSWORD}} ${{IMAGENAME}}
+            docker login -u ${{DOCKERUSER}} --password ${{DOCKERPASSWORD}}
         - name: build images
           run: |
             echo $IMAGENAME
-            docker build  -t ${IMAGENAME} .
-            docker push ${IMAGENAME}
+            docker build  -t ${{IMAGENAME}} .
+            docker push ${{DOCKERUSER}}/${{IMAGENAME}}
     test:
       runs-on: ubuntu-latest
       needs: build

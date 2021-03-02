@@ -4,24 +4,11 @@ env:
   IMAGENAME: "cribug"
 
 jobs:
-    build: 
+   test:
       runs-on: ubuntu-latest
       strategy:
         matrix:
           node-version: [14.x]
-      steps:
-        - name: Login Docker
-          run: |
-            echo ${{DOCKERUSER}} ${{DOCKERPASSWORD}} ${{IMAGENAME}}
-            docker login -u ${{DOCKERUSER}} --password ${{DOCKERPASSWORD}}
-        - name: build images
-          run: |
-            echo $IMAGENAME
-            docker build  -t ${{IMAGENAME}} .
-            docker push ${{DOCKERUSER}}/${{IMAGENAME}}
-    test:
-      runs-on: ubuntu-latest
-      needs: build
       steps:
         - name: install dependencies
           run: npm i
@@ -31,9 +18,22 @@ jobs:
           run: npm run test
         - name: run cov
           run: npm run cov 
-    deploy:
+    build: 
       runs-on: ubuntu-latest
       needs: test
+      steps:
+        - name: Login Docker
+          run:
+            echo ${{DOCKERUSER}} ${{DOCKERPASSWORD}} ${{IMAGENAME}}
+            docker login -u ${{DOCKERUSER}} --password ${{DOCKERPASSWORD}}
+        - name: build images
+          run: |
+            echo $IMAGENAME
+            docker build  -t ${{IMAGENAME}} .
+            docker push ${{DOCKERUSER}}/${{IMAGENAME}}
+    deploy:
+      runs-on: ubuntu-latest
+      needs: build
       steps:
         - name: deploy
           run: echo "this is deploy stage"

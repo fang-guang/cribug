@@ -27,7 +27,7 @@ jobs:
       uses: actions/checkout@v2
     - name: Login Docker
       run: 
-        docker login -u ${{username}} -p ${{password}}
+        docker login -u ${{secrets.DOCKERUSER}} -p ${{secrets.DOCKERPASSWORD}}
     - run: |
         docker build . --file Dockerfile --tag cribug:1.0
         docker push cribug:1.0

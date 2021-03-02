@@ -1,8 +1,5 @@
 name: cribug docker build
 on: push
-env:
-  DOCKER_REG: registry.cn-shanghai.aliyuncs.com/my-namespce/my-app
-  REG: registry.cn-shanghai.aliyuncs.com
 
 jobs:
   test:

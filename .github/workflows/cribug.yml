@@ -1,5 +1,8 @@
 name: cribug docker build
 on: push
+env:
+  DOCKER_REG: registry.cn-shanghai.aliyuncs.com/my-namespce/my-app
+  REG: registry.cn-shanghai.aliyuncs.com
 
 jobs:
   test:
@@ -26,13 +29,13 @@ jobs:
     - uses: actions/checkout@v1
     - name: Login Docker
       run: 
-        winpty docker login -u 950119 --password-stdin ${{secrets.DOCKERPASSWORD}}
+        docker login -u ${{ secrets.docker.DOCKERUSER }} --password-stdin ${{secrets.docker.DOCKERPASSWORD}}
     - name: Build the Docker image
-      run: echo "build image ${{secrets.IMAGENAME}}"
+      run: echo "build image ${{secrets.docker.IMAGENAME}}"
     - run:
         VERSION=$(date +%s)
-        docker build . --file Dockerfile --tag ${{secrets.IMAGENAME}}/app:${VERSION}
-        docker push ${{secrets.IMAGENAME}}/app:${VERSION}
+        docker build . --file Dockerfile --tag ${{secrets.docker.IMAGENAME}}/app:${VERSION}
+        docker push ${{secrets.docker.IMAGENAME}}/app:${VERSION}
 
   deploy:
     runs-on: ubuntu-latest

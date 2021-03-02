@@ -15,9 +15,8 @@ jobs:
       run: npm i
     - run: npm run lint
     - run: npm run test
-    - run: 
-        npm run nyc:cov
-        npm run cov
+    - run: npm run nyc:cov
+    - run: npm run cov
 
   build:
     runs-on: ubuntu-latest

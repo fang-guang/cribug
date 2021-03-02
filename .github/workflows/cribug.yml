@@ -29,8 +29,8 @@ jobs:
       run: 
         docker login -u ${{secrets.DOCKERUSER}} -p ${{secrets.DOCKERPASSWORD}}
     - run: |
-        docker build . --file Dockerfile --tag cribug:1.0
-        docker push cribug:1.0
+        docker build . --file Dockerfile --tag 950119/cribug:1.0
+        docker push 950119/cribug:1.0
 
   deploy:
     runs-on: ubuntu-latest

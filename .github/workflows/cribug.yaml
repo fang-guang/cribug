@@ -21,9 +21,10 @@ jobs:
     test:
       runs-on: ubuntu-latest
       needs: build
-        - name: install dependencies
-          run: npm ci
         steps:
+        - name: install dependencies
+          run: npm i
+        - nmae: run test
           run: |
             echo "this is test stage"
             npm run lint
@@ -31,5 +32,6 @@ jobs:
             npm run nyc:cov
             npm run cov 
      stage: deploy
+        runs-on: ubuntu-latest
         script:
             - echo "this is deploy stage"

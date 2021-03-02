@@ -1,12 +1,12 @@
 name: cribug docker build
-strategy:
-  matrix:
-    node-version: [14.x]
 on: push
 env: 
   IMAGENAME: "cribug"
 
 jobs:
+    strategy:
+      matrix:
+        node-version: [14.x]
     build: 
       runs-on: ubuntu-latest
       steps:

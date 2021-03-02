@@ -32,5 +32,6 @@ jobs:
           run: npm run cov 
     deploy:
       runs-on: ubuntu-latest
+      needs: test
       steps:
         - echo "this is deploy stage"

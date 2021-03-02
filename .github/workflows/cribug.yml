@@ -37,13 +37,14 @@ jobs:
     needs: [test, build]
     runs-on: ubuntu-latest
     steps:
-    - name: Deploy
+    - name: login
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }} 
         username: ${{ secrets.HOST_USERNAME }} 
         password: ${{ secrets.HOST_PASSWORD }} 
         port: ${{ secrets.HOST_PORT }} 
+    - name: Deploy
       run: |
         # 停止旧版容器
         docker stop $(docker ps --filter ancestor950119/cribug -q)

@@ -27,10 +27,11 @@ jobs:
       run: 
         docker login -u ${{ secrets.DOCKERUSER }} -p ${{secrets.DOCKERPASSWORD}}
     - run:
-        VERSION=$(date +%s)
-        echo "${{secrets.IMAGENAME}}:${VERSION}"
-        docker build . --file Dockerfile --tag ${{secrets.IMAGENAME}}:${VERSION}
-        docker push ${{secrets.IMAGENAME}}:${VERSION}
+        VERSION=$(date +%s) 
+        echo ${VERSION}
+        echo "${{secrets.IMAGENAME}}:${VERSION}"    
+        # docker build . --file Dockerfile --tag ${{secrets.IMAGENAME}}:${VERSION}
+        # docker push ${{secrets.IMAGENAME}}:${VERSION}
 
   deploy:
     runs-on: ubuntu-latest

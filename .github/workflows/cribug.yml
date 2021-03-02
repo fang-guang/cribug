@@ -43,7 +43,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: Login Docker
       run: 
-        echo "${{ secrets.DOCKERPASSWORD }} and {{ secrets.DOCKERUSER }}" | docker login -u "${{ secrets.DOCKERUSER }}" --password ${{secrets.DOCKERPASSWORD}}
+        echo "${{ secrets.DOCKERUSER }}" | docker login -u "${{ secrets.DOCKERUSER }}" --password ${{secrets.DOCKERPASSWORD}}
     - name: Build the Docker image
       run:
         docker build . --file Dockerfile --tag image

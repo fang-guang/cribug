@@ -30,7 +30,7 @@ jobs:
           run: npm run test
         - nmae: run cov
           run: npm run cov 
-     deploy:
-        runs-on: ubuntu-latest
-        script:
-            - echo "this is deploy stage"
+    deploy:
+      runs-on: ubuntu-latest
+      script:
+        - echo "this is deploy stage"

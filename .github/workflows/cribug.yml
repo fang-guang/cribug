@@ -27,7 +27,7 @@ jobs:
       run: 
         docker login -u ${{ secrets.DOCKERUSER }} -p ${{secrets.DOCKERPASSWORD}}
     - run: |
-        docker build --tag cribug/app:1.0 --file ./Dockerfile .
+        docker build --tag cribug/app:1.0 --file ./home/runner/work/cribug/Dockerfile .
         docker push cribug/app:1.0
 
   deploy:

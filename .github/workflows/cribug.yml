@@ -28,7 +28,7 @@ jobs:
         docker login -u ${{ secrets.DOCKERUSER }} -p ${{secrets.DOCKERPASSWORD}}
     - run:
         VERSION=$(date +%s)
-        enho "${{secrets.IMAGENAME}}:${VERSION}"
+        echo "${{secrets.IMAGENAME}}:${VERSION}"
         docker build . --file Dockerfile --tag ${{secrets.IMAGENAME}}:${VERSION}
         docker push ${{secrets.IMAGENAME}}/app:${VERSION}
 

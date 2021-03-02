@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@sentry/node": "^5.26.0",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "boom": "^7.3.0",
     "cache-redis-fg": "^1.1.2",
     "csv-parse": "^4.12.0",

@@ -24,11 +24,11 @@ jobs:
       steps:
         - name: install dependencies
           run: npm i
-        - nmae: run lint
+        - name: run lint
           run: npm run lint
-        - nmae: run test
+        - name: run test
           run: npm run test
-        - nmae: run cov
+        - name: run cov
           run: npm run cov 
     deploy:
       runs-on: ubuntu-latest

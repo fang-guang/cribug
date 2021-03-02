@@ -5,19 +5,19 @@ env:
 
 jobs:
    test:
-      runs-on: ubuntu-latest
-      strategy:
-        matrix:
-          node-version: [14.x]
-      steps:
-        - name: install dependencies
-          run: npm i
-        - name: run lint
-          run: npm run lint
-        - name: run test
-          run: npm run test
-        - name: run cov
-          run: npm run cov 
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '14.x'
+    - name: Install dependencies
+      run: npm i
+    - run: npm run lint
+    - run: npm run test
+    - run: npm cov
 
     build: 
       runs-on: ubuntu-latest
@@ -32,7 +32,7 @@ jobs:
             echo $IMAGENAME
             docker build  -t ${{IMAGENAME}} .
             docker push ${{DOCKERUSER}}/${{IMAGENAME}}
-            
+
     deploy:
       runs-on: ubuntu-latest
       needs: build

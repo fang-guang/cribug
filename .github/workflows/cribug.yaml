@@ -24,12 +24,13 @@ jobs:
       steps:
         - name: install dependencies
           run: npm i
-        - nmae: run test
-          run: |
-            echo "this is test stage"
+        - nmae: run lint
+          run:     
             npm run lint
-            npm run test
-            npm run nyc:cov 
+        - nmae: run test
+          run: 
+            echo "npm is test" | npm run test
+         - nmae: run cov
             npm run cov 
      deploy:
         runs-on: ubuntu-latest

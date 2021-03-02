@@ -29,9 +29,9 @@ jobs:
             echo "this is test stage"
             npm run lint
             npm run test
-            npm run nyc:cov
+            npm run nyc:cov 
             npm run cov 
-     stage: deploy
+     deploy:
         runs-on: ubuntu-latest
         script:
             - echo "this is deploy stage"

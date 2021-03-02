@@ -25,13 +25,11 @@ jobs:
         - name: install dependencies
           run: npm i
         - nmae: run lint
-          run:     
-            npm run lint
+          run: npm run lint
         - nmae: run test
-          run: 
-            echo "npm is test" | npm run test
-         - nmae: run cov
-            npm run cov 
+          run: npm run test
+        - nmae: run cov
+          run: npm run cov 
      deploy:
         runs-on: ubuntu-latest
         script:

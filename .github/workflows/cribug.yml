@@ -4,7 +4,7 @@ env:
   IMAGENAME: "cribug"
 
 jobs:
-   test:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,23 +19,24 @@ jobs:
     - run: npm run test
     - run: npm cov
 
-    build: 
-      runs-on: ubuntu-latest
-      needs: test
-      steps:
-        - name: Login Docker
-          run:
-            echo ${{DOCKERUSER}} ${{DOCKERPASSWORD}} ${{IMAGENAME}}
-            docker login -u ${{DOCKERUSER}} --password ${{DOCKERPASSWORD}}
-        - name: build images
-          run:
-            echo $IMAGENAME
-            docker build  -t ${{IMAGENAME}} .
-            docker push ${{DOCKERUSER}}/${{IMAGENAME}}
+  build: 
+    runs-on: ubuntu-latest
+    needs: test
 
-    # deploy:
-    #   runs-on: ubuntu-latest
-    #   needs: build
-    #   steps:
-    #     - name: deploy
-    #       run: echo "this is deploy stage"
+    steps:
+    - name: Login Docker
+      run:
+        echo ${{DOCKERUSER}} ${{DOCKERPASSWORD}} ${{IMAGENAME}}
+        docker login -u ${{DOCKERUSER}} --password ${{DOCKERPASSWORD}}
+    - name: build images
+      run:
+        echo $IMAGENAME
+        docker build  -t ${{IMAGENAME}} .
+        docker push ${{DOCKERUSER}}/${{IMAGENAME}}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: deploy
+      run: echo "this is deploy stage"

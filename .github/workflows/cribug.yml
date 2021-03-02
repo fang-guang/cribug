@@ -1,8 +1,5 @@
 name: cribug docker build
 on: push
-env:
-  DOCKER_REG: registry.cn-shanghai.aliyuncs.com/my-namespce/my-app
-  REG: registry.cn-shanghai.aliyuncs.com
 
 jobs:
   test:
@@ -18,8 +15,9 @@ jobs:
       run: npm i
     - run: npm run lint
     - run: npm run test
-    - run: npm run nyc:cov
-    - run: npm run cov
+    - run: 
+        npm run nyc:cov
+        npm run cov
 
   build:
     runs-on: ubuntu-latest
@@ -29,11 +27,9 @@ jobs:
     - name: Login Docker
       run: 
         docker login -u ${{ secrets.DOCKERUSER }} -p ${{secrets.DOCKERPASSWORD}}
-    - name: Build the Docker image
-      run: echo "build image ${{secrets.IMAGENAME}}"
     - run:
         VERSION=$(date +%s)
-        docker build . --file Dockerfile --tag ${{secrets.IMAGENAME}}/app:${VERSION}
+        docker build . --file Dockerfile --tag ${{secrets.IMAGENAME}}:${VERSION}
         docker push ${{secrets.IMAGENAME}}/app:${VERSION}
 
   deploy:

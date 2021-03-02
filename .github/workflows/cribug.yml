@@ -23,12 +23,22 @@ jobs:
     needs: test
 
     steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKERUSER }}
+        password: ${{ secrets.DOCKERPASSWORD }}
+        dockerfile: Dockerfile
+        repository: my/repository
+        tag_with_ref: true
+
     - name: Login Docker
       run: 
-        docker login -u ${{ secrets.DOCKERUSER }} -p ${{secrets.DOCKERPASSWORD}}
+        docker login -u ${username} -p ${password}
     - run: |
-        docker build --tag cribug/app:1.0 --file ./home/runner/work/cribug/Dockerfile .
-        docker push cribug/app:1.0
+        docker build . --file Dockerfile --tag cribug:1.0
+        docker push cribug:1.0
 
   deploy:
     runs-on: ubuntu-latest

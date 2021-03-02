@@ -29,13 +29,13 @@ jobs:
     - uses: actions/checkout@v1
     - name: Login Docker
       run: 
-        docker login -u "${{ secrets.DOCKERUSER }}" --password ${{secrets.DOCKERPASSWORD}}
+        docker login -u "${{ secrets.DOCKERUSER }}" --password-stdin ${{secrets.DOCKERPASSWORD}}
     - name: Build the Docker image
-      run:
-        docker build -t ${{secrets.IMAGENAME}} .
-    - name: Push Image
-      run: 
-        docker push ${{secrets.IMAGENAME}}
+      run: echo "build image ${{secrets.IMAGENAME}}"
+    - run:
+        VERSION=$(date +%s)
+        docker build . --file Dockerfile --tag ${{secrets.IMAGENAME}}/app:${VERSION}
+        docker push ${{secrets.IMAGENAME}}/app:${VERSION}
 
   deploy:
     runs-on: ubuntu-latest

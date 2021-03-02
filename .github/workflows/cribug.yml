@@ -28,7 +28,7 @@ jobs:
         docker login -u ${{ secrets.DOCKERUSER }} -p ${{secrets.DOCKERPASSWORD}}
     - run:
         VERSION=$(date +%s) 
-        docker build cribug:${VERSION} .
+        docker build -t cribug:${VERSION} .
         docker push cribug:${VERSION}
 
   deploy:

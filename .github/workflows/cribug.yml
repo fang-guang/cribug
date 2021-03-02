@@ -26,16 +26,15 @@ jobs:
     needs: test
 
     steps:
-    - uses: actions/checkout@v1
     - name: Login Docker
       run: 
-        docker login -u ${{ secrets.docker.DOCKERUSER }} --password-stdin ${{secrets.docker.DOCKERPASSWORD}}
+        docker login -u ${{ secrets.DOCKERUSER }} -p ${{secrets.DOCKERPASSWORD}}
     - name: Build the Docker image
-      run: echo "build image ${{secrets.docker.IMAGENAME}}"
+      run: echo "build image ${{secrets.IMAGENAME}}"
     - run:
         VERSION=$(date +%s)
-        docker build . --file Dockerfile --tag ${{secrets.docker.IMAGENAME}}/app:${VERSION}
-        docker push ${{secrets.docker.IMAGENAME}}/app:${VERSION}
+        docker build . --file Dockerfile --tag ${{secrets.IMAGENAME}}/app:${VERSION}
+        docker push ${{secrets.IMAGENAME}}/app:${VERSION}
 
   deploy:
     runs-on: ubuntu-latest

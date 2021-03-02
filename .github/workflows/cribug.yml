@@ -25,14 +25,6 @@ jobs:
     steps:
     - name: Check out code
       uses: actions/checkout@v2
-      uses: docker/build-push-action@v1
-      with:
-        username: ${{ secrets.DOCKERUSER }}
-        password: ${{ secrets.DOCKERPASSWORD }}
-        dockerfile: Dockerfile
-        repository: my/repository
-        tag_with_ref: true
-
     - name: Login Docker
       run: 
         docker login -u ${username} -p ${password}

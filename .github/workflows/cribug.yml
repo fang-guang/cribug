@@ -33,9 +33,9 @@ jobs:
             docker build  -t ${{IMAGENAME}} .
             docker push ${{DOCKERUSER}}/${{IMAGENAME}}
 
-    deploy:
-      runs-on: ubuntu-latest
-      needs: build
-      steps:
-        - name: deploy
-          run: echo "this is deploy stage"
+    # deploy:
+    #   runs-on: ubuntu-latest
+    #   needs: build
+    #   steps:
+    #     - name: deploy
+    #       run: echo "this is deploy stage"

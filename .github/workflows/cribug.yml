@@ -1,7 +1,8 @@
 name: cribug docker build
 on: push
-env: 
-  IMAGENAME: "cribug"
+env:
+  DOCKER_REG: registry.cn-shanghai.aliyuncs.com/my-namespce/my-app
+  REG: registry.cn-shanghai.aliyuncs.com
 
 jobs:
   test:
@@ -19,24 +20,47 @@ jobs:
     - run: npm run test
     - run: npm cov
 
-  build: 
+  # build: 
+  #   runs-on: ubuntu-latest
+  #   needs: test
+
+  #   steps:
+  #   - name: Login Docker
+  #     run:
+  #       echo ${{DOCKERUSER}} ${{DOCKERPASSWORD}} ${{IMAGENAME}}
+  #       docker login -u ${{DOCKERUSER}} --password ${{DOCKERPASSWORD}}
+  #   - name: build images
+  #     run:
+  #       echo $IMAGENAME
+  #       docker build  -t ${{IMAGENAME}} .
+  #       docker push ${{DOCKERUSER}}/${{IMAGENAME}}
+  build:
     runs-on: ubuntu-latest
     needs: test
 
     steps:
+    - uses: actions/checkout@v1
     - name: Login Docker
+      run: 
+        echo "${{ secrets.DOCKERPASSWORD }} and {{ secrets.DOCKERUSER }}" | docker login -u "${{ secrets.DOCKERUSER }}" --password ${{secrets.DOCKERPASSWORD}}
+    - name: Build the Docker image
       run:
-        echo ${{DOCKERUSER}} ${{DOCKERPASSWORD}} ${{IMAGENAME}}
-        docker login -u ${{DOCKERUSER}} --password ${{DOCKERPASSWORD}}
-    - name: build images
-      run:
-        echo $IMAGENAME
-        docker build  -t ${{IMAGENAME}} .
-        docker push ${{DOCKERUSER}}/${{IMAGENAME}}
-
+        docker build . --file Dockerfile --tag image
+    - name: Push Image
+      run: |
+        # Strip git ref prefix from version
+        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+        # Strip "v" prefix from tag name
+        [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+        # Use Docker `latest` tag convention
+        [ "$VERSION" == "master" ] && VERSION=latest
+        echo IMAGE_ID=$DOCKER_REG
+        echo VERSION=$VERSION
+        docker tag image $DOCKER_REG:$VERSION
+        docker push $DOCKER_REG:$VERSION
   deploy:
     runs-on: ubuntu-latest
-    needs: build
+    needs: [test, build]
     steps:
     - name: deploy
       run: echo "this is deploy stage"

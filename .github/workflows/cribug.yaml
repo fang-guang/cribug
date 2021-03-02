@@ -4,11 +4,11 @@ env:
   IMAGENAME: "cribug"
 
 jobs:
-    strategy:
-      matrix:
-        node-version: [14.x]
     build: 
       runs-on: ubuntu-latest
+      strategy:
+      matrix:
+        node-version: [14.x]
       steps:
         - name: Login Docker
           run: 

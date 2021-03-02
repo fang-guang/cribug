@@ -29,8 +29,8 @@ jobs:
     - run:
         VERSION=$(date +%s) 
         echo "123123612312"
-        echo ${VERSION}
-        echo "${{secrets.IMAGENAME}}:${VERSION}"    
+        echo "${VERSION}"
+        echo "${{secrets.IMAGENAME}}"    
         # docker build . --file Dockerfile --tag ${{secrets.IMAGENAME}}:${VERSION}
         # docker push ${{secrets.IMAGENAME}}:${VERSION}
 

@@ -36,7 +36,7 @@ jobs:
     needs: [test, build]
     runs-on: ubuntu-latest
     steps:
-    - name: login
+    - name: deploy
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }} 

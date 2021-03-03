@@ -43,17 +43,16 @@ jobs:
         username: ${{ secrets.HOST_USERNAME }} 
         password: ${{ secrets.HOST_PASSWORD }} 
         port: ${{ secrets.HOST_PORT }} 
-    - name: Deploy
-      run: |
-        # 停止旧版容器
-        docker stop $(docker ps --filter ancestor=950119/cribug:1.0 -q)
-        # 删除旧版容器
-        docker rm -f $(docker ps -a --filter ancestor=950119/cribug:1.0 -q)
-        # 删除旧版镜像
-        docker rmi -f $(docker images 950119/cribug:1.0 -q)
-        # 登录阿里云镜像服务器
-        docker login --username=${{ secrets.DOCKERUSER }} --password ${{ secrets.DOCKERPASSWORD }} registry.cn-hangzhou.aliyuncs.com
-        # 拉取最新latest版本镜像
-        docker pull 950119/cribug:latest
-        # 运行最新latest版本镜像
-        docker run -itd -p 3000:3000 950119/cribug:latest
+        script: |
+          # 停止旧版容器
+          docker stop $(docker ps --filter ancestor=950119/cribug:1.0 -q)
+          # 删除旧版容器
+          docker rm -f $(docker ps -a --filter ancestor=950119/cribug:1.0 -q)
+          # 删除旧版镜像
+          docker rmi -f $(docker images 950119/cribug:1.0 -q)
+          # 登录阿里云镜像服务器
+          docker login --username=${{ secrets.DOCKERUSER }} --password ${{ secrets.DOCKERPASSWORD }} registry.cn-hangzhou.aliyuncs.com
+          # 拉取最新latest版本镜像
+          docker pull 950119/cribug:latest
+          # 运行最新latest版本镜像
+          docker run -itd -p 3000:3000 950119/cribug:latest
